@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hsms.mapper.AdminWorkerMapper">
+
+    <resultMap id="workerResult" type="com.example.hsms.entity.Service_Worker">
+        <association property="type" column="typeid" select="com.example.hsms.mapper.SmallTypeServiceMapper.findbyid"></association>
+    </resultMap>
+
+    <!-- 动态查询列表 -->
+    <select id="list" parameterType="map" resultMap="workerResult">
+        SELECT * FROM service_worker
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <!-- 分页参数需在 Java  -->
+        <if test="start != null and pageSize != null">
+            LIMIT #{start}, #{pageSize}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotal" parameterType="map" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM service_worker
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+
+        </where>
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="workerResult">
+        select * from service_worker where id=#{id}
+    </select>
+
+    <insert id="add" parameterType="com.example.hsms.entity.Service_Worker">
+        INSERT INTO service_worker(name,gender,age,phone,avatar_url,description,is_swiper,swiper_sort,swiperurl,typeid)
+        VALUES (
+        #{name},
+        #{gender},
+        #{age},
+        #{phone},
+        #{avatarUrl},  <!-- 需确保实体类属性名为 avatarUrl -->
+        #{description},
+        #{isSwiper},   <!-- 对应表的 is_swiper 字段 -->
+        #{swiperSort},
+        #{swiperurl},
+        #{type.id}
+
+        );
+    </insert>
+
+    <update id="update" parameterType="com.example.hsms.entity.Service_Worker">
+        UPDATE service_worker
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                avatar_url = #{avatarUrl},  <!-- 字段名为 avatar_url -->
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="isSwiper != null">
+                is_swiper = #{isSwiper},     <!-- 字段名为 is_swiper -->
+            </if>
+            <if test="swiperSort != null">
+                swiper_sort = #{swiperSort}, <!-- 字段名为 swiper_sort -->
+            </if>
+            <if test="swiperurl != null and swiperurl != ''">
+                swiperurl = #{swiperurl},
+            </if>
+            <if test="type!=null and type.id!=null">
+                typeid = #{type.id},         <!-- 字段名为 typedd -->
+            </if>
+<!--            <if test="username != null">-->
+<!--                username = #{username},-->
+<!--            </if>-->
+<!--            <if test="password != null">-->
+<!--                password = #{password},-->
+<!--            </if>-->
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

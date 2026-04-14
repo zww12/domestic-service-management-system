@@ -1,0 +1,97 @@
+server:
+  port: 8090
+spring:
+  datasource:
+
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://${DB_IP:localhost}:${DB_PORT:3306}/${DB_NAME:hsms}?useUnicode=true&useSSL=false&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USER:root}
+    #    password: ${DB_PWD:root64321@}
+    password: ${DB_PWD:123456} #本地数据库密码
+
+deepseek:
+#  api-key: sk-22da8d2c2f05454996891341b59ae77f
+#  api-url: https://api.deepseek.com/v1/chat/completions
+  api:
+    url: https://api.deepseek.com/v1/chat/completions
+    key: sk-22da8d2c2f05454996891341b59ae77f
+    model: deepseek-chat
+    max_tokens: 2000
+
+
+wechat:
+  appid: wx6a8a9ac05c4bdc7b
+  secret: 31d7e5930621482b5609f12157fbdc66
+
+#    jwt:
+#      secret: your_jwt_secret_key
+#spring.jpa:
+#  hibernate.ddl-auto: update                    # 自动更新表结构
+#  show-sql: true                                # 显示SQL语句
+#  properties.hibernate.format_sql: true         # 格式化SQL输出
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#  servlet:
+#    multipart:
+#      max-file-size: 2MB
+#      max-request-size: 2MB
+
+# 自定义文件存储配置
+#file:
+#  upload-dir: /var/www/uploads/
+#file:
+#  upload-dir: /var/www/uploads/
+#  max-size: 2MB
+# application.yml
+#mybatis:
+#  type-handlers-package: org.apache.ibatis.type
+#  configuration:
+#    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+#    map-underscore-to-camel-case: true
+#    call-setters-on-nulls: true
+
+#mybatis-plus:
+#  mapperLocations: classpath:/mapper/*.xml
+#  # 支持统配符 * 或者 ; 分割
+#  typeEnumsPackage: com.qitech.base.enums
+#  global-config:
+#    db-config:
+#      # 全局默认主键类型
+#      idType: AUTO
+#      # 表名、是否使用下划线命名，默认数据库表使用下划线命名
+#      tableUnderline: true
+#      logic-delete-field: del_flag
+#      # 逻辑已删除值(默认为 1)
+#      logic-delete-value: 1
+#      # 逻辑未删除值(默认为 0)
+#      logic-not-delete-value: 0
+#  mybatis-plus:
+#    global-config:
+#      db-config:
+#        id-type: auto
+#    configuration:
+#      map-underscore-to-camel-case: true
+#      auto-mapping-behavior: full
+#      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    mapper-locations: classpath:mybatis/mapper/*.xml
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mybatis/mapper/**/*.xml
+
+workerImagesFilePath: D://bisheimage/workerImgs/
+
+swiperImagesFilePath: D://bisheimage/swiperImgs/
